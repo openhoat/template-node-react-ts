@@ -8,7 +8,7 @@ describe('backend tests', () => {
     describe('POST /auth/sign-in', () => {
       test('should respond a token with secured cookie given credentials', async () => {
         // Given
-        const username = 'johndoe'
+        const username = 'admin'
         const password = 'MyBigSecret'
         const testCase = getTestCase()
         await testCase
