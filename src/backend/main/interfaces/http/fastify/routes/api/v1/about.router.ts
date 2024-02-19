@@ -1,16 +1,18 @@
-import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
-
 import type { FastifyPluginAsync } from 'fastify'
 
-const aboutRouter: FastifyPluginAsync = async (fastify) => {
-  const { iocContainer } = fastify
-  const { config } = iocContainer
-  const { baseDir } = config
-  const { version } = JSON.parse(
-    await readFile(join(baseDir, 'package.json'), 'utf8'),
-  ) as { version: string }
-  fastify.get('/', () => ({ version }))
+import { aboutQuery } from '../../../../../../../../common/graphql/queries/about.query'
+import type { AboutResolverResponse } from '../../../../../../types/interfaces/graphql/resolvers/about.resolver'
+import { executeGql } from '../../../../graphql/util/helper'
+
+const aboutRouter: FastifyPluginAsync = (fastify) => {
+  fastify.get('/', async (__, reply) => {
+    const { about } = await executeGql<{ about: AboutResolverResponse }>(
+      reply,
+      aboutQuery,
+    )
+    return about
+  })
+  return Promise.resolve()
 }
 
 export { aboutRouter }
