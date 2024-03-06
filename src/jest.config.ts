@@ -13,10 +13,7 @@ const { name } = JSON.parse(
 const jestConfig: JestConfig = {
   ci,
   clearMocks: true,
-  collectCoverageFrom: [
-    'src/backend/main/**/!(*.d)*.ts',
-    'src/frontend/main/**/!(*.d)*.ts(x)?',
-  ],
+  collectCoverageFrom: ['src/backend/main/**/!(*.d)*.ts'],
   coverageDirectory: join(baseDir, 'dist', 'coverage', 'all'),
   coverageReporters: ['text', 'json', 'cobertura', 'lcov', 'html'],
   displayName: name,
@@ -31,10 +28,7 @@ const jestConfig: JestConfig = {
   setupFilesAfterEnv: [join(baseDir, 'src', 'jest-custom.ts')],
   silent: true,
   testEnvironment: 'node',
-  testMatch: [
-    '<rootDir>/src/backend/test/**/*.test.[jt]s',
-    '<rootDir>/src/frontend/test/**/*.test.[jt]s(x)?',
-  ],
+  testMatch: ['<rootDir>/src/backend/test/**/*.test.[jt]s'],
   transform: {
     '^.+\\.tsx?$': '@swc/jest',
   },
